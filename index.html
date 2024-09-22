@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoloceWPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: 'Montserrat', sans-serif; /* Updated font */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: default; /* Normal cursor */
+            user-select: none; /* Prevent text selection */
+        }
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .click-here-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.85);
+        }
+        .click-here-btn {
+            font-size: 36px;
+            padding: 20px 40px;
+            background: transparent;
+            color: #00aaff;
+            border: 2px solid #00aaff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+        }
+        .click-here-btn:hover {
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            box-shadow: 0 0 20px #00aaff, 0 0 30px #00aaff;
+        }
+        .player-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 80px; /* Increased padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 50px 30px rgba(0, 0, 0, 0.3);
+            width: 850px; /* Increased width */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 2.1s ease-in-out;
+            z-index: 1;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .username {
+            font-size: 26px;
+            color: #fff;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px rgba(0, 170, 255, 0.8), 0 0 20px rgba(0, 170, 255, 0.6); /* Glow effect */
+        }
+        .description {
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(0, 170, 255, 0.8), 0 0 20px rgba(0, 170, 255, 0.6); /* Glow effect */
+        }
+        .progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            position: relative;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .progress-bar {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: #00aaff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff;
+            transition: width 0.1s;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #fff;
+        }
+        .controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s, color 0.3s;
+            text-shadow: 0 0 5px rgba(0, 170, 255, 0.8), 0 0 10px rgba(0, 170, 255, 0.6); /* Glow effect */
+        }
+        .controls button:hover {
+            transform: scale(1.2);
+            color: #00aaff;
+        }
+        .volume-control {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .volume-icon {
+            cursor: pointer;
+            margin-right: 10px;
+            background-color: white;
+            border-radius: 50%;
+            padding: 10px;
+            transition: transform 0.3s;
+        }
+        .volume-icon:hover {
+            transform: scale(1.1);
+        }
+        .volume-slider {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        .volume-slider input {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 1px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+        .volume-slider input:hover {
+            opacity: 1;
+        }
+        .volume-slider input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #00aaff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .volume-slider input::-webkit-slider-thumb:hover {
+            background: #0088cc;
+        }
+        .volume-percentage {
+            color: #fff;
+            margin-top: 5px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .ascii-art {
+            white-space: pre; /* Preserve whitespace */
+            color: #fff;
+            font-family: monospace;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="click-here-container" id="click-here-screen">
+        <button class="click-here-btn" id="click-here-btn">Click Here</button>
+    </div>
+
+    <video class="background-video" autoplay muted loop>
+        <source src="Giris.mp4" type="video/mp4">
+        Tarayıcınız bu videoyu desteklemiyor.
+    </video>
+
+    <audio id="audio-player" src="problem.mp3" preload="auto" loop></audio>
+
+    <div class="player-container" id="music-player">
+        <div class="avatar">
+            <img src="soloce.png" alt="Avatar"> <!-- Updated avatar image -->
+        </div>
+        <div class="username">𝒮ℴ𝑙ℴ𝑐ℯ𝒲𝒫ℱ</div>
+        <div class="description">𝐒𝐨𝐥𝐨𝐜𝐞𝐖𝐏𝐅.𝐝𝐞𝐯</div>
+        <div class="progress" id="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="controls">
+            <button id="play-btn">&#9654;</button>
+            <span id="current-time">00:00</span>
+            <button id="pause-btn">&#10074;&#10074;</button>
+            <span>02:11</span>
+        </div>
+
+        <div class="volume-control">
+            <img src="volume.png" alt="Volume Icon" class="volume-icon" id="volume-icon" style="width: 48px; height: 48px;">
+            <div class="volume-slider" id="volume-slider">
+                <input type="range" id="volume-control" min="0" max="100" value="100">
+                <div class="volume-percentage" id="volume-percentage">100%</div>
+            </div>
+        </div>
+
+        <div class="ascii-art">
+                 d8b                                                   ,d8888b      d8b                 
+                 88P                                                   88P'         88P                 
+                d88                                                 d888888P       d88                  
+ .d888b, d8888b 888   d8888b  d8888b d8888b ?88   d8P  d8P?88,.d88b,  ?88'     d888888   d8888b?88   d8P
+ ?8b,   d8P' ?88?88  d8P' ?88d8P' `Pd8b_,dP d88  d8P' d8P'`?88'  ?88  88P     d8P' ?88  d8b_,dPd88  d8P'
+   `?8b 88b  d88 88b 88b  d8888b    88b     ?8b ,88b ,88'   88b  d8P d88      88b  ,88b 88b    ?8b ,88' 
+`?888P' `?8888P'  88b`?8888P'`?888P'`?888P' `?888P'888P'    888888P'd88'      `?88P'`88b`?888P'`?888P'  
+                                                            88P'                                        
+                                                           d88                                          
+                                                           ?8P                                          
+        </div>
+    </div>
+
+    <script>
+        const clickHereBtn = document.getElementById('click-here-btn');
+        const musicPlayer = document.getElementById('music-player');
+        const audioPlayer = document.getElementById('audio-player');
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const volumeControl = document.getElementById('volume-control');
+        const volumeIcon = document.getElementById('volume-icon');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumePercentage = document.getElementById('volume-percentage');
+
+        clickHereBtn.addEventListener('click', () => {
+            musicPlayer.style.opacity = '1';
+            document.getElementById('click-here-screen').style.display = 'none';
+            audioPlayer.play();
+        });
+
+        playBtn.addEventListener('click', () => {
+            audioPlayer.play();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            audioPlayer.pause();
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            const currentTime = audioPlayer.currentTime;
+            const duration = audioPlayer.duration;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = progressPercent + '%';
+            currentTimeDisplay.textContent = new Date(currentTime * 1000).toISOString().substr(14, 5);
+        });
+
+        volumeIcon.addEventListener('click', () => {
+            volumeSlider.style.display = volumeSlider.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        volumeControl.addEventListener('input', () => {
+            audioPlayer.volume = volumeControl.value / 100;
+            volumePercentage.textContent = volumeControl.value + '%';
+        });
+    </script>
+</body>
+</html>
