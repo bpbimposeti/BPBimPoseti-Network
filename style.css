@@ -1,0 +1,218 @@
+/* Genel Stil Ayarları */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sayfa Arkaplanı */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    overflow-x: hidden; /* Yatay kaydırmayı engeller */
+}
+
+/* Navbar */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.5); /* Kırmızı renk, %80 opaklık */
+    padding: 15px;
+    text-align: center;
+    position: fixed; /* Navbar'ı sabit tutmak için */
+    width: 100%;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(5px); /* 12px blur efekti */
+    z-index: 1000; /* Navbar'ın üstte kalmasını sağlar */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Gölgelendirme ekleyerek daha belirgin hale getirdik */
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    transition: all 0.3s ease; /* Geçiş efekti */
+    display: inline-block;
+}
+
+/* Navbar öğelerine hover efekti */
+.navbar ul li a:hover {
+    background-color: #0cefffaf; /* Hoverda arka plan sarı olacak */
+    color: #000; /* Hoverda yazı rengi siyah olacak */
+    border-radius: 5px; /* Köşeleri yuvarlat */
+    transform: scale(1.1); /* Hoverda buton biraz büyüsün */
+}
+
+/* Ana Sayfa İçeriği */
+#home {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* Yatayda ortalar */
+    align-items: center; /* Dikeyde ortalar */
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Content Box (Kutunun Kendisi) */
+.content-box {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.5); /* Koyu yarı saydam arka plan */
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    backdrop-filter: blur(24px); /* 24px bulanıklaştırma efekti */
+}
+
+/* Başlık ve Paragraf Stili */
+.content-box h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.content-box p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Sosyal Linkler Kutusuna */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Sosyal Buton Stili */
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 50%; /* Yuvarlak butonlar */
+    font-size: 2rem; /* İkon boyutu */
+    width: 80px;
+    height: 80px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: #ff4d4d; /* Hoverda kırmızı olacak */
+    transform: scale(1.1);
+}
+
+/* Instagram Butonu */
+.instagram {
+    background-color: #e4405f;
+}
+
+/* Discord Butonu */
+.discord {
+    background-color: #7289da;
+}
+
+/* İkonlar İçin Ayarlar */
+.social-icon i {
+    font-size: 2.5rem;  /* İkon boyutu */
+}
+
+
+/* Clients Bölümü */
+.clients {
+    background-image: url('resimler/imagees.jpg'); /* Arka plan fotoğrafının yolu */
+    background-size: cover; /* Fotoğrafın tüm alanı kaplamasını sağlar */
+    background-position: center; /* Fotoğrafın ortalanmasını sağlar */
+    background-attachment: fixed; /* Fotoğrafın sayfa kaydırıldığında sabit kalmasını sağlar */
+    color: #333;
+    padding: 50px;
+    text-align: center;
+    height: 100vh; /* Sayfa yüksekliğini tam kapsayacak şekilde */
+}
+
+.clients h2 {
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.clients p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* Client Listesi */
+.client-list {
+    display: flex;
+    justify-content: center; /* Ortalamak için */
+    gap: 30px;
+}
+
+.client-box {
+    width: 350px; /* Kutu genişliği */
+    padding: 20px;
+    border: 2px solid #007bff;
+    border-radius: 15px;
+    background-color: #f4f4f4;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.client-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.client-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+}
+
+.client-box p {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Hakkımızda Sayfası */
+.about-page {
+    background-color: #fff;
+    padding: 50px;
+    text-align: center;
+}
+
+.about-page h2 {
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.about-page p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
